@@ -5,7 +5,7 @@ from django.contrib.auth.models import User, Group, Permission
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'email', 'first_name', 'last_name', 'is_active', 'is_staff',
+        fields = ('id', 'email','username', 'first_name', 'last_name', 'is_active', 'is_staff',
             'is_superuser', 'date_joined', 'password', 'groups')
     
 
