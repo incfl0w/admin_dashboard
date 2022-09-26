@@ -1,10 +1,9 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import {Tab, Tabs, Box, Typography, Button} from '@mui/material';
 import UserTable from '../components/userTable';
+import GroupTable from '../components/groupTable';
+import CreateUserDialog from '../components/createUserDialog';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -46,6 +45,16 @@ export default function BasicTabs() {
     setValue(newValue);
   };
 
+  const [openU, setOpenU] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpenU(true);
+  };
+
+  const handleClose = () => {
+    setOpenU(false);
+  };
+
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -55,10 +64,12 @@ export default function BasicTabs() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
+        <Button variant="outlined" onClick={handleClickOpen}>Create User</Button>
+        <CreateUserDialog openU={openU} handleClose={handleClose}/>
         <UserTable/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <GroupTable/>
       </TabPanel>
     </Box>
   );

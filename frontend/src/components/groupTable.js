@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
-import UserService from '../services/userService';
 
+import GroupService from '../services/groupService';
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'username', headerName: 'Username', width: 130 },
-  { field: 'created', headerName: 'Created', width: 130 },
-  { field: 'groups', headerName: 'Groups', width: 130 },
+  { field: 'name', headerName: 'Name', width: 130 },
+  { field: 'permissions', headerName: 'Permissions', width: 130 },
   {
     field: 'actions',
     headerName: 'Actions',
@@ -15,21 +14,20 @@ const columns = [
     width: 90,
   }
 ];
-const userService = new UserService()
+const groupService = new GroupService()
 
-
-export default function UserTable() {
-    const [users, setUsers] = useState({});
+export default function GroupTable() {
+    const [groups, setGroups] = useState({});
 
 useEffect(() => {
-    userService.getAllUsers()
-    .then(data => setUsers(data))
+  groupService.getAllGroups()
+    .then(data => setGroups(data))
 }, [])
-console.log(users)
+console.log(groups)
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
-        rows={users}
+        rows={groups}
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[5]}
