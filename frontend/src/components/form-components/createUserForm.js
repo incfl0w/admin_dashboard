@@ -2,16 +2,24 @@ import React, {useState, useEffect} from 'react';
 import {useForm} from 'react-hook-form'
 import {TextField, Select, MenuItem, CircularProgress, Button, InputLabel} from '@mui/material';
 import GroupService from '../../services/groupService';
+import UserService from '../../services/userService';
+
 
 const CreateUserForm = () => {
     const { register, handleSubmit } = useForm();
     const [groups, setGroups] = useState(null);
     const groupService = new GroupService()
+    const userService = new UserService()
     useEffect(() => {
         groupService.getAllGroups()
         .then(data => setGroups(data))
     }, []);
     
+    const onSubmit = (data) => {
+        
+        userService.createUser(data)
+
+    }
     const generateSelectOptions = () => {
         return groups.map((group) => {
             return (
@@ -28,7 +36,7 @@ const CreateUserForm = () => {
     return (
         <div>
             <form onSubmit={handleSubmit((data) => {
-                console.log(data)
+                onSubmit(data)
             })}>
                 <TextField {...register('username')}
                     autoFocus
