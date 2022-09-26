@@ -3,6 +3,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
 
 import GroupService from '../services/groupService';
+import { CircularProgress } from '@mui/material';
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
   { field: 'name', headerName: 'Name', width: 130 },
@@ -17,13 +18,19 @@ const columns = [
 const groupService = new GroupService()
 
 export default function GroupTable() {
-    const [groups, setGroups] = useState({});
+    const [groups, setGroups] = useState(null);
 
 useEffect(() => {
   groupService.getAllGroups()
     .then(data => setGroups(data))
 }, [])
 console.log(groups)
+if (!groups){
+  return(
+    <CircularProgress/>
+  )
+}
+else{
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
@@ -35,4 +42,6 @@ console.log(groups)
       />
     </div>
   );
+}
+  
 }

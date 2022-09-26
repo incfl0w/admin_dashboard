@@ -6,15 +6,15 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useForm } from "react-hook-form";
-import CreateUserForm from './form-components/createUserForm';
+import CreateGroupForm from './form-components/createUserForm';
 
-export default function CreateUserDialog({openU, handleClose}) {
+export default function CreateGroupDialog({openU, handleClose}) {
   return (
     <div>
       <Dialog open={openU} onClose={handleClose}>
-        <DialogTitle>Create New User</DialogTitle>
+        <DialogTitle>Create New Group</DialogTitle>
         <DialogContent>
-           <CreateUserForm/>
+           <CreateGroupForm/>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

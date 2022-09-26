@@ -1,9 +1,10 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import {Tab, Tabs, Box, Typography, Button} from '@mui/material';
-import UserTable from '../components/userTable';
+import UserTable1 from '../components/userTable1';
 import GroupTable from '../components/groupTable';
 import CreateUserDialog from '../components/createUserDialog';
+import CreateGroupDialog from '../components/createGroupDialog';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -18,7 +19,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <Typography component={'span'}>{children}</Typography>
         </Box>
       )}
     </div>
@@ -46,13 +47,21 @@ export default function BasicTabs() {
   };
 
   const [openU, setOpenU] = React.useState(false);
+  const [openG, setOpenG] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpenU(true);
+  const handleClickOpen = (e) => {
+    if (e.target.id === 'add-user'){
+      setOpenU(true);
+    }
+    if (e.target.id === 'add-group'){
+      setOpenG(true);
+    }
+    
   };
 
   const handleClose = () => {
     setOpenU(false);
+    setOpenG(false);
   };
 
   return (
@@ -64,11 +73,13 @@ export default function BasicTabs() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <Button variant="outlined" onClick={handleClickOpen}>Create User</Button>
+        <Button id="add-user" variant="outlined" onClick={e => handleClickOpen(e)}>Create User</Button>
         <CreateUserDialog openU={openU} handleClose={handleClose}/>
-        <UserTable/>
+        <UserTable1/>
       </TabPanel>
       <TabPanel value={value} index={1}>
+        <Button id="add-group" variant="outlined" onClick={e => handleClickOpen(e)}>Create Group</Button>
+        <CreateGroupDialog openU={openG} handleClose={handleClose}/>
         <GroupTable/>
       </TabPanel>
     </Box>

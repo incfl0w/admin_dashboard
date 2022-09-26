@@ -2,6 +2,8 @@ import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
 import UserService from '../services/userService';
+import { CircularProgress } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -19,13 +21,17 @@ const userService = new UserService()
 
 
 export default function UserTable() {
-    const [users, setUsers] = useState({});
+    const [users, setUsers] = useState(null);
 
 useEffect(() => {
     userService.getAllUsers()
     .then(data => setUsers(data))
 }, [])
 console.log(users)
+if (!users) {
+  return <CircularProgress />
+}
+else{
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
@@ -37,4 +43,6 @@ console.log(users)
       />
     </div>
   );
+}
+  
 }
