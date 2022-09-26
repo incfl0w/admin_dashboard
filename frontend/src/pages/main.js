@@ -1,10 +1,10 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import UserTable from '../components/userTable';
+import {Tab, Tabs, Box, Typography, Button} from '@mui/material';
+import UserTable1 from '../components/userTable1';
+import GroupTable from '../components/groupTable';
+import CreateUserDialog from '../components/createUserDialog';
+import CreateGroupDialog from '../components/createGroupDialog';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -19,7 +19,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <Typography component={'span'}>{children}</Typography>
         </Box>
       )}
     </div>
@@ -46,6 +46,24 @@ export default function BasicTabs() {
     setValue(newValue);
   };
 
+  const [openU, setOpenU] = React.useState(false);
+  const [openG, setOpenG] = React.useState(false);
+
+  const handleClickOpen = (e) => {
+    if (e.target.id === 'add-user'){
+      setOpenU(true);
+    }
+    if (e.target.id === 'add-group'){
+      setOpenG(true);
+    }
+    
+  };
+
+  const handleClose = () => {
+    setOpenU(false);
+    setOpenG(false);
+  };
+
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -55,10 +73,14 @@ export default function BasicTabs() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <UserTable/>
+        <Button id="add-user" variant="outlined" onClick={e => handleClickOpen(e)}>Create User</Button>
+        <CreateUserDialog openU={openU} handleClose={handleClose}/>
+        <UserTable1/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <Button id="add-group" variant="outlined" onClick={e => handleClickOpen(e)}>Create Group</Button>
+        <CreateGroupDialog openU={openG} handleClose={handleClose}/>
+        <GroupTable/>
       </TabPanel>
     </Box>
   );

@@ -20,4 +20,4 @@ class GroupSerializer(serializers.ModelSerializer):
     permissions = PermissionsSerializer(many=True)
     class Meta:
         model = Group
-        fields = ('name', 'permissions')
+        fields = ('id', 'name', 'permissions')
