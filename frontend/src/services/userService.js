@@ -30,6 +30,24 @@ class UserService extends DefaultService {
         }
     }
 
+    async deleteUser(id){
+        console.log(`Delete User ${id}`)
+        const requestOptions = {method: "DELETE",
+        headers: { 'Content-Type': 'application/json' }, 
+    }
+    try {
+        const res = await fetch(`${this._apiBase}api/v1/users/${id}/`, requestOptions);
+        let resJson = await res.json();
+        console.log("statusP", res.status)
+        console.log("statusP", res)
+        return (statusProcessor(res))
+    }
+    catch (err) {
+        console.log(err)
+    }
+        
+    }
+
 
     _transformUser(user) {
         return {

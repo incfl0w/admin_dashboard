@@ -22,7 +22,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import UserService from '../services/userService';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { CircularProgress, Divider } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
@@ -230,24 +230,21 @@ EnhancedTableToolbar.propTypes = {
 };
 
 export default function UserTable1() {
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('id');
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('id');
+  const [selected, setSelected] = useState([]);
+  const [page, setPage] = useState(0);
+  const [dense, setDense] = useState(false);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [updates, setUpdates] = useState(1)
 
-//   my
+
 const [users, setUsers] = useState(null);
-
 useEffect(() => {
+    console.log('useEffect')
     userService.getAllUsers()
-    .then(data => setUsers(data))
-}, [])
-//   my
-//   const rows = [
-//     createData('2', 437, 18.0, 63, 4.0),
-//   ];
+    .then(data => setUsers(data))}, [updates])
+
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -279,8 +276,13 @@ useEffect(() => {
   };
 
 
-  const handleRowEditClick = (e) =>{
-    console.log(e)
+  const handleRowDeleteClick = (id) =>{
+    setUpdates(updates+1)
+    userService.deleteUser(id)
+  }
+  const handleRowEditClick = (id) =>{
+    console.log(`EDIT${id}`)
+    setUpdates(updates+1)
   }
 
   // Avoid a layout jump when reaching the last page with empty rows.
@@ -342,7 +344,7 @@ useEffect(() => {
                 
                         <EditIcon onClick={() => {handleRowEditClick(row.id)}} />
                         <Divider orientation="vertical" flexItem />
-                        <DeleteOutlineIcon onClick={() => {handleRowEditClick(row.id)}} />
+                        <DeleteOutlineIcon onClick={() => {handleRowDeleteClick(row.id)}} />
                         
                       </TableCell>
                     </TableRow>
