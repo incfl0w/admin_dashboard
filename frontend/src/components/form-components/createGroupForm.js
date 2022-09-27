@@ -28,7 +28,7 @@ const CreateGroupForm = () => {
     return (
         <div>
             <form onSubmit={handleSubmit((data) => {
-                console.log(data)
+              
             })}>
                 <TextField {...register('username')}
                     autoFocus

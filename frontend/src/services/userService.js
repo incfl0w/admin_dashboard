@@ -1,4 +1,5 @@
 import DefaultService from "./defaultService"
+import statusProcessor from "../custom_functions/statusProcessor"
 
 class UserService extends DefaultService {
     async getAllUsers() {
@@ -19,13 +20,10 @@ class UserService extends DefaultService {
         try {
             const res = await fetch(`${this._apiBase}api/v1/users/`, requestOptions);
             let resJson = await res.json();
-            if (res.status === 201) {
-                console.log("User created Successfully")
-            }
-            else {
-                console.log("error")
-                console.log(resJson)
-            }
+            console.log("statusP", res.status)
+            console.log("statusP", res)
+            return (statusProcessor(res))
+            
         }
         catch (err) {
             console.log(err)
