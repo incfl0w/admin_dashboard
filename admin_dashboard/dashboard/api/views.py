@@ -2,7 +2,7 @@ from rest_framework import generics
 from django.contrib.auth.models import User, Group
 from .serializers import UserSerializer, GroupSerializer
 
-class UserList(generics.ListAPIView):
+class UserList(generics.ListCreateAPIView):
     serializer_class = UserSerializer
     
     def get_queryset(self):

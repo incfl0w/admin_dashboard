@@ -24,7 +24,6 @@ useEffect(() => {
   groupService.getAllGroups()
     .then(data => setGroups(data))
 }, [])
-console.log(groups)
 if (!groups){
   return(
     <CircularProgress/>
