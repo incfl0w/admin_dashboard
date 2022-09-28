@@ -7,14 +7,16 @@ class UserService extends DefaultService {
         return res.map(this._transformUser)
     }
 
-    async createUser({ username, password }) {
+    async createUser({ username, password, groups }) {
+        console.log(groups)
         console.log(`Create user with params ${username}, ${password}`)
         const requestOptions = {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 username: username,
-                password: password
+                password: password,
+                groups: groups
             }),
         }
         try {
@@ -22,6 +24,7 @@ class UserService extends DefaultService {
             let resJson = await res.json();
             console.log("statusP", res.status)
             console.log("statusP", res)
+            console.log(requestOptions)
             return (statusProcessor(res))
 
         }

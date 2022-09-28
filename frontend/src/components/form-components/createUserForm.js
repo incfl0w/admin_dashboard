@@ -3,9 +3,10 @@ import {useForm} from 'react-hook-form'
 import {TextField, Select, MenuItem, CircularProgress, Button, InputLabel, Alert} from '@mui/material';
 import GroupService from '../../services/groupService';
 import UserService from '../../services/userService';
+import MultipleSelect from './MultipleSelect';
 
 
-const CreateUserForm = () => {
+const CreateUserForm = ({handleClose}) => {
     const { register, handleSubmit, reset} = useForm({
         defaultValues: {
             username: "",
@@ -18,6 +19,7 @@ const CreateUserForm = () => {
     const userService = new UserService()
     const [userData, setUserData] = useState(null)
     const [alarm, setAlarm] = useState(null)
+    const [selectedGroups, setSelectedGroups] = useState([])
     const firstUpdate = useRef(true);
     useEffect(() => {
         groupService.getAllGroups()
@@ -32,18 +34,16 @@ const CreateUserForm = () => {
     }, [userData]);
     
     const onSubmit = (data) => {
+        const groupsIdList = (groups.filter(group => selectedGroups.includes(group.name))).map(item => item.id)
+        data['groups'] = groupsIdList
+        console.log(data)
         setUserData(data)
+        setTimeout(() => {
+            handleClose()
+        }, 1500)
         
     }
-    const generateSelectOptions = () => {
-        return groups.map((group) => {
-            return (
-                <MenuItem key={group.id} value={group.id}>
-                    {group.name}
-                </MenuItem>
-            )
-        })
-    }
+    
     if (!groups){
         return <CircularProgress />
     }
@@ -53,6 +53,7 @@ const CreateUserForm = () => {
             <form onSubmit={handleSubmit((data) => {
                 onSubmit(data)
                 reset()
+                console.log(data)
                 // Here is Error in dom
             })}>
                 <TextField {...register('username')}
@@ -73,10 +74,14 @@ const CreateUserForm = () => {
                     fullWidth
                     variant="standard"
                 />
-                <InputLabel id="group-select-label">Groups</InputLabel>
-                <Select labelId="group-select-label" label="Age" {...register('group')}>
-                { generateSelectOptions()}
-                </Select>
+                <br />
+                <MultipleSelect {...register('groups')} 
+                isMulti={true}
+                // data={groups.map(group => group.id) }
+                data={groups}
+                selectedGroups={selectedGroups}
+                setSelectedGroups={setSelectedGroups}
+                />
                 <br />
                 <Button variant="contained" type='submit'>Submit</Button>
                 <p>{alarm && <Alert severity={alarm.type}>{alarm.statusText}!</Alert>}</p>
@@ -87,9 +92,3 @@ const CreateUserForm = () => {
 }
 
 export default CreateUserForm;
-
-const a = {}
-
-if(a){
-    console.log("heh")
-}

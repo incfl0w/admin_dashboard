@@ -14,7 +14,7 @@ export default function CreateUserDialog({openU, handleClose}) {
       <Dialog open={openU} onClose={handleClose}>
         <DialogTitle>Create New User</DialogTitle>
         <DialogContent>
-           <CreateUserForm/>
+           <CreateUserForm handleClose={handleClose}/>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
