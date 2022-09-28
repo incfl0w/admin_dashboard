@@ -8,7 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useForm } from "react-hook-form";
 import CreateUserForm from './form-components/createUserForm';
 
-export default function CreateUserDialog({openU, handleClose}) {
+export default function EditUserDialog({openU, handleClose}) {
   return (
     <div>
       <Dialog open={openU} onClose={handleClose}>

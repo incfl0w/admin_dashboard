@@ -1,10 +1,11 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {Tab, Tabs, Box, Typography, Button} from '@mui/material';
 import UserTable1 from '../components/userTable1';
 import GroupTable from '../components/groupTable';
 import CreateUserDialog from '../components/createUserDialog';
 import CreateGroupDialog from '../components/createGroupDialog';
+import EditUserDialog from '../components/editUserDialog';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -46,8 +47,9 @@ export default function BasicTabs() {
     setValue(newValue);
   };
 
-  const [openU, setOpenU] = React.useState(false);
-  const [openG, setOpenG] = React.useState(false);
+  const [openU, setOpenU] = useState(false);
+  const [openG, setOpenG] = useState(false);
+
 
   const handleClickOpen = (e) => {
     if (e.target.id === 'add-user'){
@@ -63,6 +65,12 @@ export default function BasicTabs() {
     setOpenU(false);
     setOpenG(false);
   };
+
+  
+
+  
+  
+
 
   return (
     <Box sx={{ width: '100%' }}>
