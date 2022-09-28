@@ -75,13 +75,13 @@ const headCells = [
   {
     id: 'id',
     numeric: false,
-    disablePadding: true,
+    disablePadding: false,
     label: 'Id',
   },
   {
     id: 'username',
     numeric: false,
-    disablePadding: true,
+    disablePadding: false,
     label: 'Username',
   },
   {
@@ -215,7 +215,7 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function UserTable1() {
+export default function UserTable() {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('id');
   const [selected, setSelected] = useState([]);
@@ -334,15 +334,19 @@ export default function UserTable1() {
                           <TableCell align="right">{row.groups}</TableCell>
 
                           <TableCell align="right">
-                            <IconButton color="primary" aria-label="upload picture" component="label">
-                              <EditIcon onClick={() => { handleRowEditClick(row.id) }} />
+                            <IconButton
+                              color="primary" aria-label="upload picture"
+                              component="label"
+                              onClick={() => { handleRowEditClick(row.id) }}>
+                              <EditIcon />
                             </IconButton>
-                            <IconButton color="primary" aria-label="upload picture" component="label">
-                            <DeleteOutlineIcon onClick={() => { handleRowDeleteClick(row.id) }} />
+                            <IconButton color="primary" aria-label="upload picture" component="label"
+                              onClick={() => { handleRowDeleteClick(row.id) }}>
+                              <DeleteOutlineIcon />
                             </IconButton>
-                            
+
                             <Divider orientation="vertical" flexItem />
-                            
+
 
                           </TableCell>
                         </TableRow>
