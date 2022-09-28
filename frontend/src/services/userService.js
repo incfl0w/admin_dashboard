@@ -23,29 +23,48 @@ class UserService extends DefaultService {
             console.log("statusP", res.status)
             console.log("statusP", res)
             return (statusProcessor(res))
-            
+
         }
         catch (err) {
             console.log(err)
         }
     }
 
-    async deleteUser(id){
+    async deleteUser(id) {
         console.log(`Delete User ${id}`)
-        const requestOptions = {method: "DELETE",
-        headers: { 'Content-Type': 'application/json' }, 
+        const requestOptions = {
+            method: "DELETE",
+            headers: { 'Content-Type': 'application/json' },
+        }
+        try {
+            const res = await fetch(`${this._apiBase}api/v1/users/${id}/`, requestOptions);
+            let resJson = await res.json();
+            return (statusProcessor(res))
+        }
+        catch (err) {
+            console.log(err)
+        }
     }
-    try {
-        const res = await fetch(`${this._apiBase}api/v1/users/${id}/`, requestOptions);
-        let resJson = await res.json();
-        console.log("statusP", res.status)
-        console.log("statusP", res)
-        return (statusProcessor(res))
-    }
-    catch (err) {
-        console.log(err)
-    }
-        
+
+    async updateUser({id, username}) {
+        console.log("user updating")
+        const requestOptions = {
+            method: "PUT",
+            headers: {'Content-Type': 'application/json'}, 
+            body: JSON.stringify({
+                id: id,
+                username: username,
+            })
+        }
+        console.log(requestOptions)
+        try {
+            const res = await fetch(`${this._apiBase}api/v1/users/${id}/`, requestOptions);
+            let resJson = await res.json();
+            return (statusProcessor(res))
+        }
+        catch (err) {
+            console.log(err)
+        }
     }
 
 

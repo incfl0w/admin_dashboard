@@ -280,9 +280,11 @@ useEffect(() => {
     setUpdates(updates+1)
     userService.deleteUser(id)
   }
+  
   const handleRowEditClick = (id) =>{
-    console.log(`EDIT${id}`)
     setUpdates(updates+1)
+    console.log(id)
+    userService.updateUser({id:id, username:`admin${id}`})
   }
 
   // Avoid a layout jump when reaching the last page with empty rows.
@@ -314,10 +316,8 @@ useEffect(() => {
                  rows.slice().sort(getComparator(order, orderBy)) */}
               {stableSort(users, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  
+                .map((row, index) => {    
                   const labelId = `enhanced-table-checkbox-${index}`;
-
                   return (
                     <TableRow
                       hover
