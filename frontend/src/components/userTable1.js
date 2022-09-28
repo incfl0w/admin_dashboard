@@ -234,7 +234,7 @@ export default function UserTable1() {
       .then(data => setUsers(data))
   }, [updates])
 
-  
+
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -334,30 +334,32 @@ export default function UserTable1() {
                           <TableCell align="right">{row.groups}</TableCell>
 
                           <TableCell align="right">
-
-                            <EditIcon onClick={() => { handleRowEditClick(row.id) }} />
-                            <Divider orientation="vertical" flexItem />
+                            <IconButton color="primary" aria-label="upload picture" component="label">
+                              <EditIcon onClick={() => { handleRowEditClick(row.id) }} />
+                            </IconButton>
+                            <IconButton color="primary" aria-label="upload picture" component="label">
                             <DeleteOutlineIcon onClick={() => { handleRowDeleteClick(row.id) }} />
+                            </IconButton>
+                            
+                            <Divider orientation="vertical" flexItem />
+                            
 
                           </TableCell>
                         </TableRow>
-                        {open && (openedId===row.id)&&<TableRow>
+                        {open && (openedId === row.id) && <TableRow>
                           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                             <Collapse in={open} timeout="auto" unmountOnExit>
                               <Box sx={{ margin: 1 }}>
-                                <Typography variant="h6" gutterBottom component="div">
-                                  Edit User
-                                </Typography>
-                                <Table size="small" aria-label="purchases">                    
+                                <Table size="small" aria-label="purchases">
                                   <TableBody>
-                                      <TableRow key={row.id}>
-                                        <TableCell component="th" scope="row">
-                                        <EditUserForm id={row.id} 
-                                        setUpdates={setUpdates} updates ={updates} 
-                                        username={row.username}
-                                        setOpen={setOpen}/>
-                                        </TableCell>
-                                      </TableRow>
+                                    <TableRow key={row.id}>
+                                      <TableCell component="th" scope="row">
+                                        <EditUserForm id={row.id}
+                                          setUpdates={setUpdates} updates={updates}
+                                          username={row.username}
+                                          setOpen={setOpen} />
+                                      </TableCell>
+                                    </TableRow>
                                   </TableBody>
                                 </Table>
                               </Box>
@@ -387,7 +389,7 @@ export default function UserTable1() {
             page={page}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
-            
+
           />
         </Paper>
         <FormControlLabel
