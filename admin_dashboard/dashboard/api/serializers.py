@@ -7,10 +7,13 @@ class UserCreateSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     
     def create(self, validated_data):
+        groups=validated_data['groups']
         user = User.objects.create_user(
             username=validated_data['username'], 
-            password=validated_data['password']
+            password=validated_data['password'],
         )
+        user.groups.set(groups)
+        print(validated_data)
         return user   
      
     class Meta:

@@ -1,30 +1,13 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import {Tab, Tabs, Box, Typography, Button} from '@mui/material';
-import UserTable1 from '../components/userTable1';
+import {Tab, Tabs, Box, Button} from '@mui/material';
+import UserTable from '../components/userTable';
 import GroupTable from '../components/groupTable';
 import CreateUserDialog from '../components/createUserDialog';
 import CreateGroupDialog from '../components/createGroupDialog';
+import TabPanel from '../components/tabPanel';
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
 
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography component={'span'}>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
 
 TabPanel.propTypes = {
   children: PropTypes.node,
@@ -46,8 +29,9 @@ export default function BasicTabs() {
     setValue(newValue);
   };
 
-  const [openU, setOpenU] = React.useState(false);
-  const [openG, setOpenG] = React.useState(false);
+  const [openU, setOpenU] = useState(false);
+  const [openG, setOpenG] = useState(false);
+
 
   const handleClickOpen = (e) => {
     if (e.target.id === 'add-user'){
@@ -75,7 +59,7 @@ export default function BasicTabs() {
       <TabPanel value={value} index={0}>
         <Button id="add-user" variant="outlined" onClick={e => handleClickOpen(e)}>Create User</Button>
         <CreateUserDialog openU={openU} handleClose={handleClose}/>
-        <UserTable1/>
+        <UserTable/>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Button id="add-group" variant="outlined" onClick={e => handleClickOpen(e)}>Create Group</Button>

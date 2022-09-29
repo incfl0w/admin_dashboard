@@ -14,15 +14,15 @@ import IconButton from '@mui/material/IconButton';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
-import GroupService from '../services/groupService';
+import UserService from '../services/userService';
 import { useEffect, useState } from 'react';
 import {  CircularProgress, Collapse, Divider } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import EditGroupForm from './form-components/editGroupForm';
+import EditUserForm from './form-components/editUserForm';
 
 
-const groupService = new GroupService()
+const userService = new UserService()
 
 
 function descendingComparator(a, b, orderBy) {
@@ -65,16 +65,22 @@ const headCells = [
     label: 'Id',
   },
   {
-    id: 'Name',
+    id: 'username',
     numeric: false,
     disablePadding: false,
-    label: 'name',
+    label: 'Username',
   },
   {
-    id: 'description',
+    id: 'created',
     numeric: true,
     disablePadding: false,
-    label: 'description',
+    label: 'Created',
+  },
+  {
+    id: 'groups',
+    numeric: true,
+    disablePadding: false,
+    label: 'Groups',
   },
   {
     id: 'action',
@@ -128,7 +134,10 @@ EnhancedTableHead.propTypes = {
 };
 
 
-export default function GroupTable() {
+
+
+
+export default function UserTable() {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('id');
   const [page, setPage] = useState(0);
@@ -139,11 +148,11 @@ export default function GroupTable() {
   const [openedId, setOpenedId] = useState(null)
 
 
-  const [groups, setGroups] = useState(null);
+  const [users, setUsers] = useState(null);
   useEffect(() => {
     console.log('useEffect')
-    groupService.getAllGroups()
-      .then(data => setGroups(data))
+    userService.getAllUsers()
+      .then(data => setUsers(data))
   }, [updates])
 
 
@@ -174,7 +183,7 @@ export default function GroupTable() {
 
   const handleRowDeleteClick = (id) => {
     setUpdates(updates + 1)
-    groupService.deleteGroup(id)
+    userService.deleteUser(id)
   }
 
   const handleRowEditClick = (id) => {
@@ -188,8 +197,8 @@ export default function GroupTable() {
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - groups.length) : 0;
-  if (!groups) {
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - users.length) : 0;
+  if (!users) {
     return <CircularProgress />
   }
   else {
@@ -206,12 +215,12 @@ export default function GroupTable() {
                 order={order}
                 orderBy={orderBy}
                 onRequestSort={handleRequestSort}
-                rowCount={groups.length}
+                rowCount={users.length}
               />
               <TableBody>
                 {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-                {stableSort(groups, getComparator(order, orderBy))
+                {stableSort(users, getComparator(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
                     const labelId = `enhanced-table-checkbox-${index}`;
@@ -228,9 +237,9 @@ export default function GroupTable() {
                             id={labelId}
                             scope="row"
                           > {row.id}</TableCell>
-                          <TableCell align="left">{row.name}</TableCell>
-                          <TableCell align="right">{row.description}</TableCell>
-                         
+                          <TableCell align="left">{row.username}</TableCell>
+                          <TableCell align="right">{row.created}</TableCell>
+                          <TableCell align="right">{row.groups}</TableCell>
 
                           <TableCell align="right">
                             <IconButton
@@ -257,9 +266,9 @@ export default function GroupTable() {
                                   <TableBody>
                                     <TableRow key={row.id}>
                                       <TableCell component="th" scope="row">
-                                        <EditGroupForm id={row.id}
+                                        <EditUserForm id={row.id}
                                           setUpdates={setUpdates} updates={updates}
-                                          name={row.name}
+                                          username={row.username}
                                           setOpen={setOpen} />
                                       </TableCell>
                                     </TableRow>
@@ -287,7 +296,7 @@ export default function GroupTable() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={groups.length}
+            count={users.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
