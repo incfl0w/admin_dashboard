@@ -3,7 +3,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import User, Group, Permission
 
 class UserCreateSerializer(serializers.ModelSerializer):
-    
+    date_joined = serializers.DateTimeField(read_only=True, format='%d-%m-%Y')
     password = serializers.CharField(write_only=True)
     
     def create(self, validated_data):
@@ -26,6 +26,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
         
         
 class UserUpdateSerializer(serializers.ModelSerializer): 
+    date_joined = serializers.DateTimeField(read_only=True, format='%d-%m-%Y')
     class Meta:
         model = User
         
