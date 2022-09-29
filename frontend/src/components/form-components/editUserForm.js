@@ -7,17 +7,18 @@ import { Stack } from '@mui/system';
 import MultipleSelect from './MultipleSelect';
 
 
-const EditUserForm = ({ id, setUpdates, setOpen, updates, username }) => {
+const EditUserForm = ({ id, setUpdates, setOpen, updates, username, groups:defaultSelectedGroups }) => {
     const { register, handleSubmit, reset } = useForm({
         defaultValues: {
             username: username,
-            groups: ""
+            
         }
     });
+    console.log(defaultSelectedGroups)
     const [groups, setGroups] = useState(null);
     const groupService = new GroupService()
     const userService = new UserService()
-    const [selectedGroups, setSelectedGroups] = useState([])
+    const [selectedGroups, setSelectedGroups] = useState([defaultSelectedGroups])
     const [userData, setUserData] = useState(null)
     const [alarm, setAlarm] = useState(null)
     const firstUpdate = useRef(true);
@@ -25,6 +26,14 @@ const EditUserForm = ({ id, setUpdates, setOpen, updates, username }) => {
         groupService.getAllGroups()
             .then(data => setGroups(data))
     }, []);
+    useEffect(() => {
+        if (groups){
+            console.log("groups", groups)
+        const groupsNames = (groups.filter(group => defaultSelectedGroups.includes(group.id))).map(item => item.name)
+        console.log(groupsNames)
+        setSelectedGroups(groupsNames)
+        }   
+    }, [groups])
 
     useEffect(() => {
         if (firstUpdate.current) { firstUpdate.current = false; return }
@@ -36,7 +45,7 @@ const EditUserForm = ({ id, setUpdates, setOpen, updates, username }) => {
     const onSubmit = (data) => {
         data["id"] = id
         const groupsIdList = (groups.filter(group => selectedGroups.includes(group.name))).map(item => item.id)
-        // data['groups'] = groupsIdList
+        data["groups"] = groupsIdList
         setUserData(data)
         console.log(data)
         setTimeout(() => {

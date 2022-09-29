@@ -269,7 +269,8 @@ export default function UserTable() {
                                         <EditUserForm id={row.id}
                                           setUpdates={setUpdates} updates={updates}
                                           username={row.username}
-                                          setOpen={setOpen} />
+                                          setOpen={setOpen}
+                                          groups={row.groups} />
                                       </TableCell>
                                     </TableRow>
                                   </TableBody>
