@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form'
-import { TextField, Select, MenuItem, CircularProgress, Button, InputLabel, Alert, Grid } from '@mui/material';
+import { TextField, MenuItem, CircularProgress, Button,  Alert } from '@mui/material';
 import GroupService from '../../services/groupService';
 import { Stack } from '@mui/system';
 
@@ -87,7 +87,7 @@ const EditGroupForm = ({ id, setUpdates, setOpen, updates, name, description }) 
                         />
                         <br />
                         <Button variant="contained" type='submit'>Update</Button>
-                        <p>{alarm && <Alert severity={alarm.type}>{alarm.statusText}!</Alert>}</p>
+                        <div>{alarm && <Alert severity={alarm.type}>{alarm.statusText}!</Alert>}</div>
                     </Stack>
                 </form>
             </div>

@@ -15,7 +15,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
 import GroupService from '../services/groupService';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import {  CircularProgress, Collapse, Divider } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
@@ -221,7 +221,7 @@ export default function GroupTable({updates, setUpdates}) {
                   .map((row, index) => {
                     const labelId = `enhanced-table-checkbox-${index}`;
                     return (
-                      <>
+                      <Fragment key={row.id}>
                         <TableRow
                           hover
                           tabIndex={-1}
@@ -275,7 +275,7 @@ export default function GroupTable({updates, setUpdates}) {
                             </Collapse>
                           </TableCell>
                         </TableRow>}
-                      </>
+                      </Fragment>
                     );
                   })}
                 {emptyRows > 0 && (

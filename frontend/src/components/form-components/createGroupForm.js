@@ -47,7 +47,6 @@ const CreateGroupForm = ({handleClose, updates, setUpdates}) => {
                     variant="standard"
                 />
                 <TextField {...register('description')}
-                    autoFocus
                     margin="dense"
                     id="description"
                     label="description"

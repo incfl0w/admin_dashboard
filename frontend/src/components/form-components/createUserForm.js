@@ -67,7 +67,6 @@ const CreateUserForm = ({handleClose, setUpdates, updates}) => {
                     variant="standard"
                 />
                 <TextField {...register('password')}
-                    autoFocus
                     margin="dense"
                     id="password"
                     label="Password"
