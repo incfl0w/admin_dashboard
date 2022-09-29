@@ -49,7 +49,7 @@ class UserService extends DefaultService {
         }
     }
 
-    async updateUser({id, username}) {
+    async updateUser({id, username, groups}) {
         console.log("user updating")
         const requestOptions = {
             method: "PUT",
@@ -57,6 +57,7 @@ class UserService extends DefaultService {
             body: JSON.stringify({
                 id: id,
                 username: username,
+                groups: groups
             })
         }
         console.log(requestOptions)
