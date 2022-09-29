@@ -70,7 +70,7 @@ class GroupService extends DefaultService {
         return{
             id: group.id, 
             name: group.name,
-            permissions: group.permissions
+            description: group.description
         }
     }
 

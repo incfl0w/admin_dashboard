@@ -146,6 +146,11 @@ export default function GroupTable() {
       .then(data => setGroups(data))
   }, [updates])
 
+  useEffect(() => {
+    console.log('groups')
+    console.log(groups)
+    
+  }, [groups])
 
 
   const handleRequestSort = (event, property) => {
@@ -260,6 +265,7 @@ export default function GroupTable() {
                                         <EditGroupForm id={row.id}
                                           setUpdates={setUpdates} updates={updates}
                                           name={row.name}
+                                          description={row.description}
                                           setOpen={setOpen} />
                                       </TableCell>
                                     </TableRow>
