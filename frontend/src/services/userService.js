@@ -63,6 +63,7 @@ class UserService extends DefaultService {
         try {
             const res = await fetch(`${this._apiBase}api/v1/users/${id}/`, requestOptions);
             let resJson = await res.json();
+            console.log(res)
             return (statusProcessor(res))
         }
         catch (err) {

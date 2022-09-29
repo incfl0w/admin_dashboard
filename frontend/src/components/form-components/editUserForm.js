@@ -4,6 +4,7 @@ import { TextField, Select, MenuItem, CircularProgress, Button, InputLabel, Aler
 import GroupService from '../../services/groupService';
 import UserService from '../../services/userService';
 import { Stack } from '@mui/system';
+import MultipleSelect from './MultipleSelect';
 
 
 const EditUserForm = ({ id, setUpdates, setOpen, updates, username }) => {
@@ -16,6 +17,7 @@ const EditUserForm = ({ id, setUpdates, setOpen, updates, username }) => {
     const [groups, setGroups] = useState(null);
     const groupService = new GroupService()
     const userService = new UserService()
+    const [selectedGroups, setSelectedGroups] = useState([])
     const [userData, setUserData] = useState(null)
     const [alarm, setAlarm] = useState(null)
     const firstUpdate = useRef(true);
@@ -33,24 +35,18 @@ const EditUserForm = ({ id, setUpdates, setOpen, updates, username }) => {
 
     const onSubmit = (data) => {
         data["id"] = id
-        console.log(data)
+        const groupsIdList = (groups.filter(group => selectedGroups.includes(group.name))).map(item => item.id)
+        // data['groups'] = groupsIdList
         setUserData(data)
-
+        console.log(data)
         setTimeout(() => {
             setUpdates(updates + 1)
             setOpen(false)
         }, 1500)
 
     }
-    const generateSelectOptions = () => {
-        return groups.map((group) => {
-            return (
-                <MenuItem key={group.id} value={group.id}>
-                    {group.name}
-                </MenuItem>
-            )
-        })
-    }
+    
+
     if (!groups) {
         return <CircularProgress />
     }
@@ -69,7 +65,6 @@ const EditUserForm = ({ id, setUpdates, setOpen, updates, username }) => {
                         alignItems="center"
 
                     >
-
                         <TextField {...register('username')}
                             autoFocus
                             margin="dense"
@@ -79,11 +74,13 @@ const EditUserForm = ({ id, setUpdates, setOpen, updates, username }) => {
 
                             variant="standard"
                         />
-
-                        <InputLabel id="group-select-label">Groups</InputLabel>
-                        <Select labelId="group-select-label" label="Age" {...register('group')}>
-                            {generateSelectOptions()}
-                        </Select>
+                        <MultipleSelect {...register('groups')}
+                            isMulti={true}
+                            // data={groups.map(group => group.id) }
+                            data={groups}
+                            selectedGroups={selectedGroups}
+                            setSelectedGroups={setSelectedGroups}
+                        />
                         <br />
                         <Button variant="contained" type='submit'>Update</Button>
                         <p>{alarm && <Alert severity={alarm.type}>{alarm.statusText}!</Alert>}</p>
