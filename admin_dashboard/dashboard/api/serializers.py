@@ -35,14 +35,9 @@ class UserUpdateSerializer(serializers.ModelSerializer):
             'is_superuser', 'date_joined')
 
         
-        
-class PermissionsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Permission
-        fields = ('__all__')
-        
 class GroupSerializer(serializers.ModelSerializer):
-    permissions = PermissionsSerializer(many=True)
+
     class Meta:
         model = Group
-        fields = ('id', 'name', 'permissions')
+        fields = ('id', 'name', 'description')
+        read_only_fields = ('id', )
