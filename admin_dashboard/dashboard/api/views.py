@@ -14,12 +14,17 @@ class UserRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         return User.objects.all()
     
-class GroupList(generics.ListAPIView):
+class GroupList(generics.ListCreateAPIView):
     serializer_class = GroupSerializer
     
     def get_queryset(self):
         return Group.objects.all()
     
     
+class GroupRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = GroupSerializer
+    
+    def get_queryset(self):
+        return Group.objects.all()
     
  
