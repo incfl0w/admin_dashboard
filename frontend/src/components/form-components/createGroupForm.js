@@ -59,7 +59,7 @@ const CreateGroupForm = ({handleClose, updates, setUpdates}) => {
                 
                 <br />
                 <Button variant="contained" type='submit'>Submit</Button>
-                <p>{alarm && <Alert severity={alarm.type}>{alarm.statusText}!</Alert>}</p>
+                <div>{alarm && <Alert severity={alarm.type}>{alarm.statusText}!</Alert>}</div>
             </form>
         </div>
     );

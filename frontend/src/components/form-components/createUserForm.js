@@ -50,7 +50,7 @@ const CreateUserForm = ({handleClose, setUpdates, updates}) => {
     }
     else{
     return (
-        <div>
+        <div >
             <form onSubmit={handleSubmit((data) => {
                 onSubmit(data)
                 reset()
@@ -84,7 +84,7 @@ const CreateUserForm = ({handleClose, setUpdates, updates}) => {
                 />
                 <br />
                 <Button variant="contained" type='submit'>Submit</Button>
-                <p>{alarm && <Alert severity={alarm.type}>{alarm.statusText}!</Alert>}</p>
+                <div>{alarm && <Alert severity={alarm.type}>{alarm.statusText}!</Alert>}</div>
             </form>
         </div>
     );

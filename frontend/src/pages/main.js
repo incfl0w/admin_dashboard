@@ -58,12 +58,12 @@ export default function Main() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <Button id="add-user" variant="outlined" onClick={e => handleClickOpen(e)}>Create User</Button>
+        <Button sx={{ mb: 3 }} id="add-user" variant="outlined" onClick={e => handleClickOpen(e)}>Create User</Button>
         <CreateUserDialog openU={openU} handleClose={handleClose} updates={updatesU} setUpdates={setUpdatesU}/>
         <UserTable updates={updatesU} setUpdates={setUpdatesU}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Button id="add-group" variant="outlined" onClick={e => handleClickOpen(e)}>Create Group</Button>
+        <Button sx={{ mb: 3 }} id="add-group" variant="outlined" onClick={e => handleClickOpen(e)}>Create Group</Button>
         <CreateGroupDialog openU={openG}  handleClose={handleClose} updates={updatesG} setUpdates={setUpdatesG}/>
         <GroupTable updates={updatesG} setUpdates={setUpdatesG}/>
       </TabPanel>
