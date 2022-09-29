@@ -50,7 +50,7 @@ const CreateUserForm = ({handleClose, setUpdates, updates}) => {
     }
     else{
     return (
-        <div>
+        <div >
             <form onSubmit={handleSubmit((data) => {
                 onSubmit(data)
                 reset()
