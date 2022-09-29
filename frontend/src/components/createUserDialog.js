@@ -18,7 +18,6 @@ export default function CreateUserDialog({openU, handleClose}) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-         
         </DialogActions>
       </Dialog>
     </div>

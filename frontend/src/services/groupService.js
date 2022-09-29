@@ -34,7 +34,7 @@ class GroupService extends DefaultService {
         headers: {"Content-Type": "application/json"}
        }
        try{
-        const res = await fetch(`${this._apiBase}api/v1/users/${id}/`, requestOptions);
+        const res = await fetch(`${this._apiBase}api/v1/groups/${id}/`, requestOptions);
         let resJson = await res.json
         return (statusProcessor(res))
        }
