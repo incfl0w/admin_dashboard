@@ -83,8 +83,9 @@ const EditUserForm = ({ id, setUpdates, setOpen, updates, username, groups:defau
 
                             variant="standard"
                         />
-                        <MultipleSelect {...register('groups')}
+                        <MultipleSelect  {...register('groups')}
                             isMulti={true}
+                            
                             // data={groups.map(group => group.id) }
                             data={groups}
                             selectedGroups={selectedGroups}
@@ -92,7 +93,7 @@ const EditUserForm = ({ id, setUpdates, setOpen, updates, username, groups:defau
                         />
                         <br />
                         <Button variant="contained" type='submit'>Update</Button>
-                        <p>{alarm && <Alert severity={alarm.type}>{alarm.statusText}!</Alert>}</p>
+                        <div>{alarm && <Alert severity={alarm.type}>{alarm.statusText}!</Alert>}</div>
                     </Stack>
                 </form>
             </div>

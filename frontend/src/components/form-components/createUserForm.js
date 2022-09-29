@@ -6,7 +6,7 @@ import UserService from '../../services/userService';
 import MultipleSelect from './MultipleSelect';
 
 
-const CreateUserForm = ({handleClose}) => {
+const CreateUserForm = ({handleClose, setUpdates, updates}) => {
     const { register, handleSubmit, reset} = useForm({
         defaultValues: {
             username: "",
@@ -40,6 +40,7 @@ const CreateUserForm = ({handleClose}) => {
         setUserData(data)
         setTimeout(() => {
             handleClose()
+            setUpdates(updates+1)
         }, 1500)
         
     }
@@ -66,7 +67,6 @@ const CreateUserForm = ({handleClose}) => {
                     variant="standard"
                 />
                 <TextField {...register('password')}
-                    autoFocus
                     margin="dense"
                     id="password"
                     label="Password"

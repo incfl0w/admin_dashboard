@@ -2,7 +2,7 @@
 import {Tabs, Tab, Box} from '@mui/material'
 import  TabPanel from './components/tabPanel'
 import { AccountCircle, Group} from '@mui/icons-material';
-import BasicTabs from './pages/main';
+import Main from './pages/main';
 
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
   }
   return (
     <div className="App">
-      <BasicTabs></BasicTabs>
+      <Main></Main>
     </div>
   );
 }

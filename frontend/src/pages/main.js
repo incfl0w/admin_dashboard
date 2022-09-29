@@ -22,7 +22,7 @@ function a11yProps(index) {
   };
 }
 
-export default function BasicTabs() {
+export default function Main() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -31,7 +31,8 @@ export default function BasicTabs() {
 
   const [openU, setOpenU] = useState(false);
   const [openG, setOpenG] = useState(false);
-
+  const [updatesU, setUpdatesU] = useState(1)
+  const [updatesG, setUpdatesG] = useState(1)
 
   const handleClickOpen = (e) => {
     if (e.target.id === 'add-user'){
@@ -58,13 +59,13 @@ export default function BasicTabs() {
       </Box>
       <TabPanel value={value} index={0}>
         <Button id="add-user" variant="outlined" onClick={e => handleClickOpen(e)}>Create User</Button>
-        <CreateUserDialog openU={openU} handleClose={handleClose}/>
-        <UserTable/>
+        <CreateUserDialog openU={openU} handleClose={handleClose} updates={updatesU} setUpdates={setUpdatesU}/>
+        <UserTable updates={updatesU} setUpdates={setUpdatesU}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Button id="add-group" variant="outlined" onClick={e => handleClickOpen(e)}>Create Group</Button>
-        <CreateGroupDialog openU={openG} handleClose={handleClose}/>
-        <GroupTable/>
+        <CreateGroupDialog openU={openG}  handleClose={handleClose} updates={updatesG} setUpdates={setUpdatesG}/>
+        <GroupTable updates={updatesG} setUpdates={setUpdatesG}/>
       </TabPanel>
     </Box>
   );

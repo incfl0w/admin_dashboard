@@ -15,7 +15,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
 import GroupService from '../services/groupService';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import {  CircularProgress, Collapse, Divider } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
@@ -128,13 +128,13 @@ EnhancedTableHead.propTypes = {
 };
 
 
-export default function GroupTable() {
+export default function GroupTable({updates, setUpdates}) {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('id');
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [updates, setUpdates] = useState(1)
+
   const [open, setOpen] = useState(false);
   const [openedId, setOpenedId] = useState(null)
 
@@ -146,6 +146,11 @@ export default function GroupTable() {
       .then(data => setGroups(data))
   }, [updates])
 
+  useEffect(() => {
+    console.log('groups')
+    console.log(groups)
+    
+  }, [groups])
 
 
   const handleRequestSort = (event, property) => {
@@ -216,7 +221,7 @@ export default function GroupTable() {
                   .map((row, index) => {
                     const labelId = `enhanced-table-checkbox-${index}`;
                     return (
-                      <>
+                      <Fragment key={row.id}>
                         <TableRow
                           hover
                           tabIndex={-1}
@@ -260,6 +265,7 @@ export default function GroupTable() {
                                         <EditGroupForm id={row.id}
                                           setUpdates={setUpdates} updates={updates}
                                           name={row.name}
+                                          description={row.description}
                                           setOpen={setOpen} />
                                       </TableCell>
                                     </TableRow>
@@ -269,7 +275,7 @@ export default function GroupTable() {
                             </Collapse>
                           </TableCell>
                         </TableRow>}
-                      </>
+                      </Fragment>
                     );
                   })}
                 {emptyRows > 0 && (

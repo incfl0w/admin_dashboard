@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -15,7 +14,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
 import UserService from '../services/userService';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState, useRef } from 'react';
 import {  CircularProgress, Collapse, Divider } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
@@ -137,13 +136,12 @@ EnhancedTableHead.propTypes = {
 
 
 
-export default function UserTable() {
+export default function UserTable({updates, setUpdates}) {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('id');
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [updates, setUpdates] = useState(1)
   const [open, setOpen] = useState(false);
   const [openedId, setOpenedId] = useState(null)
 
@@ -225,11 +223,11 @@ export default function UserTable() {
                   .map((row, index) => {
                     const labelId = `enhanced-table-checkbox-${index}`;
                     return (
-                      <>
+                      <Fragment key={row.id}>
                         <TableRow
                           hover
                           tabIndex={-1}
-                          key={row.id}
+                          
                         >
 
                           <TableCell
@@ -258,13 +256,13 @@ export default function UserTable() {
 
                           </TableCell>
                         </TableRow>
-                        {open && (openedId === row.id) && <TableRow>
+                        {open && (openedId === row.id) && <TableRow >
                           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                             <Collapse in={open} timeout="auto" unmountOnExit>
                               <Box sx={{ margin: 1 }}>
                                 <Table size="small" aria-label="purchases">
                                   <TableBody>
-                                    <TableRow key={row.id}>
+                                    <TableRow >
                                       <TableCell component="th" scope="row">
                                         <EditUserForm id={row.id}
                                           setUpdates={setUpdates} updates={updates}
@@ -279,7 +277,7 @@ export default function UserTable() {
                             </Collapse>
                           </TableCell>
                         </TableRow>}
-                      </>
+                        </Fragment>
                     );
                   })}
                 {emptyRows > 0 && (

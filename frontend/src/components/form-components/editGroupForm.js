@@ -1,22 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form'
-import { TextField, Select, MenuItem, CircularProgress, Button, InputLabel, Alert, Grid } from '@mui/material';
+import { TextField, MenuItem, CircularProgress, Button,  Alert } from '@mui/material';
 import GroupService from '../../services/groupService';
-import UserService from '../../services/userService';
 import { Stack } from '@mui/system';
 
 
-const EditGroupForm = ({ id, setUpdates, setOpen, updates, username }) => {
+const EditGroupForm = ({ id, setUpdates, setOpen, updates, name, description }) => {
     const { register, handleSubmit, reset } = useForm({
         defaultValues: {
-            username: username,
-            groups: ""
+            name: name,
+            description: description
         }
     });
     const [groups, setGroups] = useState(null);
     const groupService = new GroupService()
-    const userService = new UserService()
-    const [userData, setUserData] = useState(null)
+    const [groupData, setGroupData] = useState(null)
     const [alarm, setAlarm] = useState(null)
     const firstUpdate = useRef(true);
     useEffect(() => {
@@ -27,14 +25,14 @@ const EditGroupForm = ({ id, setUpdates, setOpen, updates, username }) => {
     useEffect(() => {
         if (firstUpdate.current) { firstUpdate.current = false; return }
 
-        userService.updateUser(userData)
+        groupService.updateGroup(groupData)
             .then(data => setAlarm(data))
-    }, [userData]);
+    }, [groupData]);
 
     const onSubmit = (data) => {
         data["id"] = id
         console.log(data)
-        setUserData(data)
+        setGroupData(data)
 
         setTimeout(() => {
             setUpdates(updates + 1)
@@ -70,23 +68,26 @@ const EditGroupForm = ({ id, setUpdates, setOpen, updates, username }) => {
 
                     >
 
-                        <TextField {...register('username')}
+                        <TextField {...register('name')}
                             autoFocus
                             margin="dense"
-                            id="username"
-                            label="Username"
+                            id="name"
+                            label="Name"
                             type="text"
 
                             variant="standard"
                         />
-
-                        <InputLabel id="group-select-label">Groups</InputLabel>
-                        <Select labelId="group-select-label" label="Age" {...register('group')}>
-                            {generateSelectOptions()}
-                        </Select>
+                        <TextField {...register('description')}
+                            autoFocus
+                            margin="dense"
+                            id="description"
+                            label="Description"
+                            type="text"
+                            variant="standard"
+                        />
                         <br />
                         <Button variant="contained" type='submit'>Update</Button>
-                        <p>{alarm && <Alert severity={alarm.type}>{alarm.statusText}!</Alert>}</p>
+                        <div>{alarm && <Alert severity={alarm.type}>{alarm.statusText}!</Alert>}</div>
                     </Stack>
                 </form>
             </div>
