@@ -7,6 +7,25 @@ class GroupService extends DefaultService {
         return res.map(this._transformGroup)
     }
 
+    async createGroup({name, description}){
+        console.log(`Creating group with ${name}${description}` )
+        const requestOptions = {
+            method: "POST", 
+            headers: {"Content-Type": "application/json"},
+            body:JSON.stringify({
+                name: name,
+                description: description
+            })
+        }
+        try{
+            const res = await fetch(`${this._apiBase}api/v1/groups/`, requestOptions)
+            let resJson = await res.json()
+            return statusProcessor(res)
+        }
+        catch (err){
+            console.log(err)
+        }
+    }
 
     async deleteGroup(id){
        console.log(`Delete Group ${id}`) 
@@ -22,6 +41,28 @@ class GroupService extends DefaultService {
        catch (err) {
         console.log(err)
        }
+    }
+    async updateGroup({id, name, description}) {
+        console.log('group updating')
+        const requestOptions = {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                id:id,
+                name: name,
+                description: description
+            })
+        }
+        console.log(requestOptions)
+        try{
+            const res = await fetch(`${this._apiBase}api/v1/groups/${id}/`, requestOptions)
+            console.log(res)
+            let resJson = await res.json();
+            return (statusProcessor(res))
+        }
+        catch(err) {
+            console.log(err)
+        }
     }
 
 
