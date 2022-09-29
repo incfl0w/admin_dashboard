@@ -137,13 +137,13 @@ EnhancedTableHead.propTypes = {
 
 
 
-export default function UserTable() {
+export default function UserTable({updates, setUpdates}) {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('id');
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [updates, setUpdates] = useState(1)
+  
   const [open, setOpen] = useState(false);
   const [openedId, setOpenedId] = useState(null)
 

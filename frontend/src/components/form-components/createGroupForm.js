@@ -3,7 +3,7 @@ import {useForm} from 'react-hook-form'
 import {TextField,  CircularProgress, Button, Alert} from '@mui/material';
 import GroupService from '../../services/groupService';
 
-const CreateGroupForm = ({handleClose}) => {
+const CreateGroupForm = ({handleClose, updates, setUpdates}) => {
     const { register, handleSubmit, reset } = useForm({
         defaultValues:{
             username: "",
@@ -14,10 +14,12 @@ const CreateGroupForm = ({handleClose}) => {
     const [groupData, setGroupData] = useState(null)
     const [alarm, setAlarm] = useState(null)
     const firstUpdate = useRef(true);
+
     const onSubmit = (data) => {
         setGroupData(data)
         setTimeout(() => {
             handleClose()
+            setUpdates(updates+1)
         }, 1500)
     }
 
