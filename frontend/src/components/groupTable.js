@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -16,7 +15,7 @@ import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
 import GroupService from '../services/groupService';
 import { Fragment, useEffect, useState } from 'react';
-import {  CircularProgress, Collapse, Divider } from '@mui/material';
+import { CircularProgress, Collapse, Divider } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditGroupForm from './form-components/editGroupForm';
@@ -41,8 +40,6 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-// This method is created for cross-browser compatibility, if you don't
-// need to support IE11, you can use Array.prototype.sort() directly
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
@@ -128,7 +125,7 @@ EnhancedTableHead.propTypes = {
 };
 
 
-export default function GroupTable({updates, setUpdates}) {
+export default function GroupTable({ updates, setUpdates }) {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('id');
   const [page, setPage] = useState(0);
@@ -141,16 +138,12 @@ export default function GroupTable({updates, setUpdates}) {
 
   const [groups, setGroups] = useState(null);
   useEffect(() => {
-    console.log('useEffect')
+
     groupService.getAllGroups()
       .then(data => setGroups(data))
   }, [updates])
 
-  useEffect(() => {
-    console.log('groups')
-    console.log(groups)
-    
-  }, [groups])
+
 
 
   const handleRequestSort = (event, property) => {
@@ -185,16 +178,15 @@ export default function GroupTable({updates, setUpdates}) {
   const handleRowEditClick = (id) => {
     setUpdates(updates + 1)
     setOpen(!open);
-    console.log(id)
     setOpenedId(id)
   }
 
 
   const renderDescription = (description) => {
-      if (description.length < 50){
-        return description
-      }
-      return description.substring(0, 50) + "..."
+    if (description.length < 50) {
+      return description
+    }
+    return description.substring(0, 50) + "..."
   }
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -240,7 +232,7 @@ export default function GroupTable({updates, setUpdates}) {
                           > {row.id}</TableCell>
                           <TableCell align="left">{row.name}</TableCell>
                           <TableCell align="right">{renderDescription(row.description)}</TableCell>
-                         
+
                           <TableCell align="right">
                             <IconButton
                               color="primary" aria-label="upload picture"

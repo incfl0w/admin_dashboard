@@ -14,8 +14,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
 import UserService from '../services/userService';
-import { Fragment, useEffect, useState, useRef } from 'react';
-import {  CircularProgress, Collapse, Divider } from '@mui/material';
+import { Fragment, useEffect, useState} from 'react';
+import { CircularProgress, Collapse, Divider } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditUserForm from './form-components/editUserForm';
@@ -137,7 +137,7 @@ EnhancedTableHead.propTypes = {
 
 
 
-export default function UserTable({updates, setUpdates}) {
+export default function UserTable({ updates, setUpdates }) {
   const groupService = new GroupService()
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('id');
@@ -149,13 +149,12 @@ export default function UserTable({updates, setUpdates}) {
   const [groups, setGroups] = useState(null);
   useEffect(() => {
     groupService.getAllGroups()
-        .then(data => setGroups(data))
-}, []);
+      .then(data => setGroups(data))
+  }, []);
 
 
   const [users, setUsers] = useState(null);
   useEffect(() => {
-    console.log('useEffect')
     userService.getAllUsers()
       .then(data => setUsers(data))
   }, [updates])
@@ -194,7 +193,6 @@ export default function UserTable({updates, setUpdates}) {
   const handleRowEditClick = (id) => {
     setUpdates(updates + 1)
     setOpen(!open);
-    console.log(id)
     setOpenedId(id)
   }
 
@@ -234,7 +232,7 @@ export default function UserTable({updates, setUpdates}) {
                         <TableRow
                           hover
                           tabIndex={-1}
-                          
+
                         >
 
                           <TableCell
@@ -244,7 +242,7 @@ export default function UserTable({updates, setUpdates}) {
                           > {row.id}</TableCell>
                           <TableCell align="left">{row.username}</TableCell>
                           <TableCell align="right">{row.created}</TableCell>
-                          
+
                           <TableCell align="right">{(groups.filter(group => row.groups.includes(group.id))).map(item => item.name).join(", ")}</TableCell>
 
                           <TableCell align="right">
@@ -276,9 +274,9 @@ export default function UserTable({updates, setUpdates}) {
                                           setUpdates={setUpdates} updates={updates}
                                           username={row.username}
                                           setOpen={setOpen}
-                                          defaultSelectedGroups={row.groups} 
+                                          defaultSelectedGroups={row.groups}
                                           groups={groups}
-                                          setGroups={setGroups}/>
+                                          setGroups={setGroups} />
                                       </TableCell>
                                     </TableRow>
                                   </TableBody>
@@ -287,7 +285,7 @@ export default function UserTable({updates, setUpdates}) {
                             </Collapse>
                           </TableCell>
                         </TableRow>}
-                        </Fragment>
+                      </Fragment>
                     );
                   })}
                 {emptyRows > 0 && (

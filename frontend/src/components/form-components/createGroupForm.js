@@ -1,11 +1,11 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {useForm} from 'react-hook-form'
-import {TextField,  CircularProgress, Button, Alert} from '@mui/material';
+import React, { useState, useEffect, useRef } from 'react';
+import { useForm } from 'react-hook-form'
+import { TextField, Button, Alert } from '@mui/material';
 import GroupService from '../../services/groupService';
 
-const CreateGroupForm = ({handleClose, updates, setUpdates}) => {
+const CreateGroupForm = ({ handleClose, updates, setUpdates }) => {
     const { register, handleSubmit, reset } = useForm({
-        defaultValues:{
+        defaultValues: {
             username: "",
             description: ""
         }
@@ -19,23 +19,22 @@ const CreateGroupForm = ({handleClose, updates, setUpdates}) => {
         setGroupData(data)
         setTimeout(() => {
             handleClose()
-            setUpdates(updates+1)
+            setUpdates(updates + 1)
         }, 1500)
     }
 
     useEffect(() => {
-        if (firstUpdate.current) {firstUpdate.current = false; return}
-        console.log("runUseEffect")
+        if (firstUpdate.current) { firstUpdate.current = false; return }
         groupService.createGroup(groupData)
-        .then(data => setAlarm(data))
+            .then(data => setAlarm(data))
     }, [groupData]);
 
     return (
         <div>
             <form onSubmit={handleSubmit((data) => {
-              onSubmit(data)
-              reset()
-             
+                onSubmit(data)
+                reset()
+
             })}>
                 <TextField {...register('name')}
                     autoFocus
@@ -56,7 +55,7 @@ const CreateGroupForm = ({handleClose, updates, setUpdates}) => {
                     rows={5}
                     variant="standard"
                 />
-                
+
                 <br />
                 <Button variant="contained" type='submit'>Submit</Button>
                 <div>{alarm && <Alert severity={alarm.type}>{alarm.statusText}!</Alert>}</div>

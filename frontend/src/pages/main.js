@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import {Tab, Tabs, Box, Button} from '@mui/material';
+import { Tab, Tabs, Box, Button } from '@mui/material';
 import UserTable from '../components/userTable';
 import GroupTable from '../components/groupTable';
 import CreateUserDialog from '../components/createUserDialog';
@@ -35,13 +35,13 @@ export default function Main() {
   const [updatesG, setUpdatesG] = useState(1)
 
   const handleClickOpen = (e) => {
-    if (e.target.id === 'add-user'){
+    if (e.target.id === 'add-user') {
       setOpenU(true);
     }
-    if (e.target.id === 'add-group'){
+    if (e.target.id === 'add-group') {
       setOpenG(true);
     }
-    
+
   };
 
   const handleClose = () => {
@@ -59,13 +59,13 @@ export default function Main() {
       </Box>
       <TabPanel value={value} index={0}>
         <Button sx={{ mb: 3 }} id="add-user" variant="outlined" onClick={e => handleClickOpen(e)}>Create User</Button>
-        <CreateUserDialog openU={openU} handleClose={handleClose} updates={updatesU} setUpdates={setUpdatesU}/>
-        <UserTable updates={updatesU} setUpdates={setUpdatesU}/>
+        <CreateUserDialog openU={openU} handleClose={handleClose} updates={updatesU} setUpdates={setUpdatesU} />
+        <UserTable updates={updatesU} setUpdates={setUpdatesU} />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Button sx={{ mb: 3 }} id="add-group" variant="outlined" onClick={e => handleClickOpen(e)}>Create Group</Button>
-        <CreateGroupDialog openU={openG}  handleClose={handleClose} updates={updatesG} setUpdates={setUpdatesG}/>
-        <GroupTable updates={updatesG} setUpdates={setUpdatesG}/>
+        <CreateGroupDialog openU={openG} handleClose={handleClose} updates={updatesG} setUpdates={setUpdatesG} />
+        <GroupTable updates={updatesG} setUpdates={setUpdatesG} />
       </TabPanel>
     </Box>
   );

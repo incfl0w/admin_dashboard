@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form'
-import { TextField, Select, MenuItem, CircularProgress, Button, InputLabel, Alert, Grid } from '@mui/material';
+import { TextField, CircularProgress, Button, Alert } from '@mui/material';
 
 import UserService from '../../services/userService';
 import { Stack } from '@mui/system';
@@ -11,25 +11,22 @@ const EditUserForm = ({ id, setUpdates, setOpen, updates, username, groups, setG
     const { register, handleSubmit, reset } = useForm({
         defaultValues: {
             username: username,
-            
+
         }
     });
-    console.log(defaultSelectedGroups)
-    
-    
+
+
     const userService = new UserService()
     const [selectedGroups, setSelectedGroups] = useState([defaultSelectedGroups])
     const [userData, setUserData] = useState(null)
     const [alarm, setAlarm] = useState(null)
     const firstUpdate = useRef(true);
-    
+
     useEffect(() => {
-        if (groups){
-            console.log("groups", groups)
-        const groupsNames = (groups.filter(group => defaultSelectedGroups.includes(group.id))).map(item => item.name)
-        console.log(groupsNames)
-        setSelectedGroups(groupsNames)
-        }   
+        if (groups) {
+            const groupsNames = (groups.filter(group => defaultSelectedGroups.includes(group.id))).map(item => item.name)
+            setSelectedGroups(groupsNames)
+        }
     }, [groups])
 
     useEffect(() => {
@@ -44,14 +41,13 @@ const EditUserForm = ({ id, setUpdates, setOpen, updates, username, groups, setG
         const groupsIdList = (groups.filter(group => selectedGroups.includes(group.name))).map(item => item.id)
         data["groups"] = groupsIdList
         setUserData(data)
-        console.log(data)
         setTimeout(() => {
             setUpdates(updates + 1)
             setOpen(false)
         }, 1500)
 
     }
-    
+
 
     if (!groups) {
         return <CircularProgress />
@@ -80,9 +76,9 @@ const EditUserForm = ({ id, setUpdates, setOpen, updates, username, groups, setG
 
                             variant="standard"
                         />
-                        <MultipleSelect  
+                        <MultipleSelect
                             isMulti={true}
-                            
+
                             // data={groups.map(group => group.id) }
                             data={groups}
                             selectedGroups={selectedGroups}

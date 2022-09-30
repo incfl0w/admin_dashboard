@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form'
-import { TextField, MenuItem, CircularProgress, Button,  Alert } from '@mui/material';
+import { TextField, MenuItem, CircularProgress, Button, Alert } from '@mui/material';
 import GroupService from '../../services/groupService';
 import { Stack } from '@mui/system';
 
@@ -31,7 +31,6 @@ const EditGroupForm = ({ id, setUpdates, setOpen, updates, name, description }) 
 
     const onSubmit = (data) => {
         data["id"] = id
-        console.log(data)
         setGroupData(data)
 
         setTimeout(() => {

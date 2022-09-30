@@ -8,8 +8,7 @@ class UserService extends DefaultService {
     }
 
     async createUser({ username, password, groups }) {
-        console.log(groups)
-        console.log(`Create user with params ${username}, ${password}`)
+
         const requestOptions = {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
@@ -21,10 +20,7 @@ class UserService extends DefaultService {
         }
         try {
             const res = await fetch(`${this._apiBase}api/v1/users/`, requestOptions);
-            let resJson = await res.json();
-            console.log("statusP", res.status)
-            console.log("statusP", res)
-            console.log(requestOptions)
+            await res.json();
             return (statusProcessor(res))
 
         }
@@ -34,14 +30,13 @@ class UserService extends DefaultService {
     }
 
     async deleteUser(id) {
-        console.log(`Delete User ${id}`)
         const requestOptions = {
             method: "DELETE",
             headers: { 'Content-Type': 'application/json' },
         }
         try {
             const res = await fetch(`${this._apiBase}api/v1/users/${id}/`, requestOptions);
-            let resJson = await res.json();
+            await res.json();
             return (statusProcessor(res))
         }
         catch (err) {
@@ -49,22 +44,19 @@ class UserService extends DefaultService {
         }
     }
 
-    async updateUser({id, username, groups}) {
-        console.log("user updating")
+    async updateUser({ id, username, groups }) {
         const requestOptions = {
             method: "PUT",
-            headers: {'Content-Type': 'application/json'}, 
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 id: id,
                 username: username,
                 groups: groups
             })
         }
-        console.log(requestOptions)
         try {
             const res = await fetch(`${this._apiBase}api/v1/users/${id}/`, requestOptions);
-            let resJson = await res.json();
-            console.log(res)
+            await res.json();
             return (statusProcessor(res))
         }
         catch (err) {
