@@ -11,6 +11,9 @@ class UserList(generics.ListCreateAPIView):
     filterset_class = UserFilter
     
     def get_queryset(self):
+        email = self.request.GET.get('email')
+        if email:
+            return User.objects.filter(email__endswith=email)
         return User.objects.all()
  
 class UserRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
@@ -23,7 +26,6 @@ class GroupList(generics.ListCreateAPIView):
     serializer_class = GroupSerializer
     filter_backends = (DjangoFilterBackend, )
     filterset_class = GroupFilter
-    
     def get_queryset(self):
         return Group.objects.all()
     
