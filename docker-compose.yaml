@@ -1,0 +1,34 @@
+version: "2.10.2"
+services:
+  admin_dashboard:
+    restart: always
+    container_name: code
+    command : bash -c "python3 manage.py makemigrations && python3 manage.py migrate && 
+                      python3 manage.py loaddata db.json &&
+                      python3 manage.py runserver 0.0.0.0:8000"
+    build:
+      context: ./admin_dashboard/
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    networks:
+      - db-net
+
+  frontend:
+    restart: always
+    command : npm start
+    container_name: front
+    build:
+      context: ./frontend/
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    depends_on:
+      - admin_dashboard
+    networks:
+      - db-net
+
+networks:
+  db-net:
+    driver: bridge

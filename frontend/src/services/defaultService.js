@@ -1,6 +1,6 @@
 class DefaultService {
     constructor() {
-        this._apiBase = "http://127.0.0.1:8000/"
+        this._apiBase = "http://0.0.0.0:8000/"
     }
 
     async getResource(url) {
