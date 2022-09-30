@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form'
 import { TextField, Select, MenuItem, CircularProgress, Button, InputLabel, Alert, Grid } from '@mui/material';
-import GroupService from '../../services/groupService';
+
 import UserService from '../../services/userService';
 import { Stack } from '@mui/system';
 import MultipleSelect from './MultipleSelect';
 
 
-const EditUserForm = ({ id, setUpdates, setOpen, updates, username, groups:defaultSelectedGroups }) => {
+const EditUserForm = ({ id, setUpdates, setOpen, updates, username, groups, setGroups, defaultSelectedGroups }) => {
     const { register, handleSubmit, reset } = useForm({
         defaultValues: {
             username: username,
@@ -15,17 +15,14 @@ const EditUserForm = ({ id, setUpdates, setOpen, updates, username, groups:defau
         }
     });
     console.log(defaultSelectedGroups)
-    const [groups, setGroups] = useState(null);
-    const groupService = new GroupService()
+    
+    
     const userService = new UserService()
     const [selectedGroups, setSelectedGroups] = useState([defaultSelectedGroups])
     const [userData, setUserData] = useState(null)
     const [alarm, setAlarm] = useState(null)
     const firstUpdate = useRef(true);
-    useEffect(() => {
-        groupService.getAllGroups()
-            .then(data => setGroups(data))
-    }, []);
+    
     useEffect(() => {
         if (groups){
             console.log("groups", groups)

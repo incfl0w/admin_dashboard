@@ -19,6 +19,7 @@ import {  CircularProgress, Collapse, Divider } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditUserForm from './form-components/editUserForm';
+import GroupService from '../services/groupService';
 
 
 const userService = new UserService()
@@ -137,6 +138,7 @@ EnhancedTableHead.propTypes = {
 
 
 export default function UserTable({updates, setUpdates}) {
+  const groupService = new GroupService()
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('id');
   const [page, setPage] = useState(0);
@@ -144,6 +146,11 @@ export default function UserTable({updates, setUpdates}) {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [open, setOpen] = useState(false);
   const [openedId, setOpenedId] = useState(null)
+  const [groups, setGroups] = useState(null);
+  useEffect(() => {
+    groupService.getAllGroups()
+        .then(data => setGroups(data))
+}, []);
 
 
   const [users, setUsers] = useState(null);
@@ -237,7 +244,8 @@ export default function UserTable({updates, setUpdates}) {
                           > {row.id}</TableCell>
                           <TableCell align="left">{row.username}</TableCell>
                           <TableCell align="right">{row.created}</TableCell>
-                          <TableCell align="right">{row.groups}</TableCell>
+                          
+                          <TableCell align="right">{(groups.filter(group => row.groups.includes(group.id))).map(item => item.name).join(", ")}</TableCell>
 
                           <TableCell align="right">
                             <IconButton
@@ -268,7 +276,9 @@ export default function UserTable({updates, setUpdates}) {
                                           setUpdates={setUpdates} updates={updates}
                                           username={row.username}
                                           setOpen={setOpen}
-                                          groups={row.groups} />
+                                          defaultSelectedGroups={row.groups} 
+                                          groups={groups}
+                                          setGroups={setGroups}/>
                                       </TableCell>
                                     </TableRow>
                                   </TableBody>

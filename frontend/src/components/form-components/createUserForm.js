@@ -75,7 +75,7 @@ const CreateUserForm = ({handleClose, setUpdates, updates}) => {
                     variant="standard"
                 />
                 <br />
-                <MultipleSelect {...register('groups')} 
+                <MultipleSelect  
                 isMulti={true}
                 // data={groups.map(group => group.id) }
                 data={groups}

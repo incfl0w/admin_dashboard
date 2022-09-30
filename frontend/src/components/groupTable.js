@@ -190,7 +190,12 @@ export default function GroupTable({updates, setUpdates}) {
   }
 
 
-
+  const renderDescription = (description) => {
+      if (description.length < 50){
+        return description
+      }
+      return description.substring(0, 50) + "..."
+  }
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - groups.length) : 0;
@@ -234,9 +239,8 @@ export default function GroupTable({updates, setUpdates}) {
                             scope="row"
                           > {row.id}</TableCell>
                           <TableCell align="left">{row.name}</TableCell>
-                          <TableCell align="right">{row.description}</TableCell>
+                          <TableCell align="right">{renderDescription(row.description)}</TableCell>
                          
-
                           <TableCell align="right">
                             <IconButton
                               color="primary" aria-label="upload picture"
