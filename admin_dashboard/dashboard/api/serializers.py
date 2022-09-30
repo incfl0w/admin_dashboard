@@ -35,7 +35,9 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         read_only_fields = ('id', 'email', 'first_name', 'last_name', 'is_active', 'is_staff',
             'is_superuser', 'date_joined')
 
-        
+
+      
+     
 class GroupSerializer(serializers.ModelSerializer):
 
     class Meta:
