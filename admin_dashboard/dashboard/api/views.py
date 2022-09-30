@@ -5,40 +5,42 @@ from .serializers import UserCreateSerializer, UserUpdateSerializer, GroupSerial
 from django_filters.rest_framework import DjangoFilterBackend
 from .service import UserFilter, GroupFilter
 
+
 class UserList(generics.ListCreateAPIView):
     serializer_class = UserCreateSerializer
     filter_backends = (DjangoFilterBackend, )
     filterset_class = UserFilter
-    
+
     def get_queryset(self):
         email = self.request.GET.get('email')
         if email:
             return User.objects.filter(email__endswith=email)
         return User.objects.all()
- 
+
+
 class UserRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserUpdateSerializer
-    
+
     def get_queryset(self):
         return User.objects.all()
-    
+
+
 class GroupList(generics.ListCreateAPIView):
     serializer_class = GroupSerializer
     filter_backends = (DjangoFilterBackend, )
     filterset_class = GroupFilter
+
     def get_queryset(self):
         return Group.objects.all()
-    
-    
+
+
 class GroupRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = GroupSerializer
-    
+
     def get_queryset(self):
         return Group.objects.all()
-    
+
     def destroy(self, request, *args, **kwargs):
         if Group.objects.get(pk=kwargs['pk']).user_set.all():
-            return JsonResponse({ 'success' : False, 'message': "Can't delete this because users assigned to group"}, status = 403)
+            return JsonResponse({'success': False, 'message': "Can't delete this because users assigned to group"}, status=403)
         return super().destroy(request, *args, **kwargs)
-    
- 

@@ -83,7 +83,7 @@ const EditUserForm = ({ id, setUpdates, setOpen, updates, username, groups:defau
 
                             variant="standard"
                         />
-                        <MultipleSelect  {...register('groups')}
+                        <MultipleSelect  
                             isMulti={true}
                             
                             // data={groups.map(group => group.id) }
